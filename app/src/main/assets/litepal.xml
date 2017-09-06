@@ -4,9 +4,10 @@
     <dbname value = "BookStore"></dbname>
     <version value = "1"></version>
     <list>
+        <mapping class="com.coolweather.android.db.City"></mapping>
         <mapping class = "com.coolweather.android.db.Province"></mapping>
-        <maping class="com.coolweather.android.db.County"></maping>
-        <maping class="com.coolweather.android.db.City"></maping>
+        <mapping class="com.coolweather.android.db.County"></mapping>
+
     </list>
 
 </litepal>
