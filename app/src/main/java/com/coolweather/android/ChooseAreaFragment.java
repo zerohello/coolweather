@@ -4,6 +4,7 @@ import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -58,6 +59,7 @@ public class ChooseAreaFragment extends Fragment {
 
     private int currentLevel;
 
+    private static final String TAG = "ChooseAreaFragment";
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -132,6 +134,7 @@ public class ChooseAreaFragment extends Fragment {
         cityList = DataSupport.where("provinceid=?",
                 String.valueOf(selectedProvince.getId())).find(City.class);
         if (cityList.size() > 0) {
+            Log.d(TAG, "queryCities: "+cityList.size());
             dataList.clear();
             for (City city : cityList) {
                 dataList.add(city.getCityName());
@@ -141,7 +144,9 @@ public class ChooseAreaFragment extends Fragment {
             currentLevel = LEVEL_CITY;
         } else {
             int provinceCode = selectedProvince.getProvinceCode();
-            String address = "http://guolin.tech/api/china" + provinceCode;
+            Log.d("000", "queryCities: "+provinceCode);
+            String address = "http://guolin.tech/api/china/" + provinceCode;
+            Log.d(TAG, "queryCities: "+address);
             queryFromServer(address, "city");
         }
     }
@@ -190,6 +195,7 @@ public class ChooseAreaFragment extends Fragment {
                 if ("province".equals(type)) {
                     result = Utility.handleProvinceResponse(responseText);
                 } else if ("city".equals(type)) {
+                    Log.d(TAG, "onResponse: "+responseText);
                     result = Utility.handleCityResponse(responseText, selectedProvince.getId());
                 } else if ("county".equals(type)) {
                     result = Utility.handleCountyResponse(responseText, selectedCity.getId());
